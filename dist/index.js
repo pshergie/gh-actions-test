@@ -31108,7 +31108,7 @@ async function run() {
     //   body: message
     // });
 
-    await github.rest.issues.createComment({
+    await github.issues.createComment({
       issue_number: pull_request_number,
       repo: context.repo.repo,
       body: message
