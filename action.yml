@@ -1,13 +1,10 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: "Hello World"
+description: "Greet someone and record the time"
 inputs:
-  who-to-greet: # id of input
-    description: 'Who to greet'
+  message: # id of input
+    description: "posts message to a PR"
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+    default: "World"
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: "node20"
+  main: "dist/index.js"
