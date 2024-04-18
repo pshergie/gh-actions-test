@@ -13,6 +13,8 @@ async function run() {
       return;
     }
 
+    console.log('token:', myToken)
+
     const pull_request_number = context.payload.pull_request.number;
 
     const octokit = github.getOctokit(myToken)
