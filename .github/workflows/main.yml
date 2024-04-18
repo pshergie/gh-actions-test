@@ -17,4 +17,5 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
           message: "Test message!"
