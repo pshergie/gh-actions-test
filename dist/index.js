@@ -31108,11 +31108,17 @@ async function run() {
     //   body: message
     // });
 
-    await octokit.rest.issues.create({
+    // await octokit.rest.issues.create({
+    //   issue_number: pull_request_number,
+    //   repo: context.repo.repo,
+    //   body: message
+    // })
+
+    await octokit.rest.issues.createComment({
+      ...context.repo,
       issue_number: pull_request_number,
-      repo: context.repo.repo,
-      body: message
-    })
+      body: message,
+    });
   } catch (error) {
     core.setFailed(error.message);
   }
