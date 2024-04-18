@@ -31108,7 +31108,7 @@ async function run() {
     //   body: message
     // });
 
-    await github.issues.createComment({
+    await octokit.rest.issues.create({
       issue_number: pull_request_number,
       repo: context.repo.repo,
       body: message
