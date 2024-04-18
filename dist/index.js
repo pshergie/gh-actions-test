@@ -31084,7 +31084,7 @@ const github = __nccwpck_require__(8555);
 async function run() {
   try {
     const message = core.getInput('message');
-    const github_token = core.getInput('GITHUB_TOKEN');
+    const myToken = core.getInput('myToken');
 
     const context = github.context;
 
@@ -31095,9 +31095,7 @@ async function run() {
 
     const pull_request_number = context.payload.pull_request.number;
 
-    // const octokit = new github.GitHub(github_token);
-    const myToken = core.getInput('myToken');
-    const octokit = github.getOctokit(github_token)
+    const octokit = github.getOctokit(myToken)
     const new_comment = octokit.issues.createComment({
       ...context.repo,
       issue_number: pull_request_number,
