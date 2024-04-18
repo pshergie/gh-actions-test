@@ -31102,11 +31102,17 @@ async function run() {
     //   body: message
     // });
 
-    const new_comment = github.issues.createComment({
-      ...context.repo,
+    // const new_comment = github.issues.createComment({
+    //   ...context.repo,
+    //   issue_number: pull_request_number,
+    //   body: message
+    // });
+
+    await github.rest.issues.createComment({
       issue_number: pull_request_number,
+      repo: context.repo.repo,
       body: message
-    });
+    })
   } catch (error) {
     core.setFailed(error.message);
   }
