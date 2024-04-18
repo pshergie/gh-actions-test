@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: pshergie/gh-actions-test@v1.4
+        uses: pshergie/gh-actions-test@v1.6
         with:
           who-to-greet: "Mona the Octocat"
       # Use the output from the `hello` step
