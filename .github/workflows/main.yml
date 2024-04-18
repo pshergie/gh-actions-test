@@ -3,11 +3,12 @@ on:
   pull_request:
     branches:
       - main
+      - master
 
 jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: ./
         with:
           message: "Test message!"
