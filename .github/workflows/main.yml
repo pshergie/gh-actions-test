@@ -1,9 +1,7 @@
 on:
-  # Trigger the workflow on push or pull request
   pull_request:
-    branches:
-      - main
-      - master
+    types:
+      - ready_for_review
 
 jobs:
   comment:
