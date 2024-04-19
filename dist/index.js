@@ -31111,7 +31111,9 @@ async function run() {
       pull_number,
     });
 
-    console.log('changed files:', data);
+    const listOfFiles = data.map(change => change.filename);
+
+    console.log('changed files:', listOfFiles);
 
   } catch (error) {
     core.setFailed(error.message);
