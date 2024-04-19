@@ -3,26 +3,38 @@ const github = require('@actions/github');
 
 async function run() {
   try {
-    const message = core.getInput('message');
-    const github_token = core.getInput('GITHUB_TOKEN');
-
+    const myToken = core.getInput('myToken');
+    const octokit = github.getOctokit(myToken);
     const context = github.context;
-    if (context.payload.pull_request == null) {
-      core.setFailed('No pull request found.');
-      return;
-    }
-    const pull_request_number = context.payload.pull_request.number;
+    const pull_number = context.payload.pull_request.number;
 
-    const octokit = new github.GitHub(github_token);
-    const new_comment = octokit.issues.createComment({
+
+    const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
-      issue_number: pull_request_number,
-      body: message
+      pull_number,
     });
+
+    const listOfFiles = data.map(change => change.filename);
+
+    listOfFiles.map(async (file) => {
+      if (file.includes('src/components')) {
+        await octokit.rest.issues.createComment({
+          ...context.repo,
+          issue_number: pull_number,
+          body: "You did change file(s) in the components folder. Please make sure the changes follow the components rules.",
+        });
+      } else if (file.includes('src/utils')) {
+        await octokit.rest.issues.createComment({
+          ...context.repo,
+          issue_number: pull_number,
+          body: "You did change file(s) in the utils folder. Please make sure the changes follow the utils rules.",
+        });
+      }
+    })
 
   } catch (error) {
     core.setFailed(error.message);
   }
 }
 
-run();
+run()

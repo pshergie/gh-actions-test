@@ -31081,18 +31081,43 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(9773);
 const github = __nccwpck_require__(8555);
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
+async function run() {
+  try {
+    const myToken = core.getInput('myToken');
+    const octokit = github.getOctokit(myToken);
+    const context = github.context;
+    const pull_number = context.payload.pull_request.number;
+
+
+    const { data } = await octokit.rest.pulls.listFiles({
+      ...context.repo,
+      pull_number,
+    });
+
+    const listOfFiles = data.map(change => change.filename);
+
+    listOfFiles.map(async (file) => {
+      if (file.includes('src/components')) {
+        await octokit.rest.issues.createComment({
+          ...context.repo,
+          issue_number: pull_number,
+          body: "You did change file(s) in the components folder. Please make sure the changes follow the components rules.",
+        });
+      } else if (file.includes('src/utils')) {
+        await octokit.rest.issues.createComment({
+          ...context.repo,
+          issue_number: pull_number,
+          body: "You did change file(s) in the utils folder. Please make sure the changes follow the utils rules.",
+        });
+      }
+    })
+
+  } catch (error) {
+    core.setFailed(error.message);
+  }
 }
+
+run()
 
 })();
 
