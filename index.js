@@ -15,8 +15,6 @@ async function run() {
 
     console.log('====================');
     console.log('Posting comment...');
-    console.log('context', github.context);
-    console.log('pull request number', pull_number);
     console.log('====================');
 
     // You can also pass in additional options as a second parameter to getOctokit
@@ -28,7 +26,7 @@ async function run() {
       body: message,
     });
 
-    const changedFiles = octokit.rest.pulls.listFiles({
+    const changedFiles = await octokit.rest.pulls.listFiles({
       ...context.repo,
       pull_number,
     });
