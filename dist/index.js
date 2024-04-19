@@ -31091,6 +31091,8 @@ async function run() {
 
     const octokit = github.getOctokit(myToken);
 
+    const context = github.context;
+
     console.log('====================');
     console.log('Posting comment...');
     console.log('====================');
