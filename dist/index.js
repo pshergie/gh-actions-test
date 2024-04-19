@@ -31095,7 +31095,8 @@ async function run() {
 
     const pull_request_number = context.payload.pull_request.number;
 
-    const octokit = github.getOctokit(myToken)
+    const octokit = github.getOctokit(myToken);
+
     // const new_comment = octokit.issues.createComment({
     //   ...context.repo,
     //   issue_number: pull_request_number,
@@ -31121,11 +31122,11 @@ async function run() {
     //   body: message
     // })
 
-    await octokit.rest.issues.createComment({
-      ...context.repo,
-      issue_number: pull_request_number,
-      body: message,
-    });
+    // await octokit.rest.issues.createComment({
+    //   ...context.repo,
+    //   issue_number: pull_request_number,
+    //   body: message,
+    // });
   } catch (error) {
     core.setFailed(error.message);
   }
