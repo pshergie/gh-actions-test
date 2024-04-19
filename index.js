@@ -22,11 +22,18 @@ async function run() {
     //   body: message
     // });
 
-    // const new_comment = github.issues.createComment({
-    //   ...context.repo,
-    //   issue_number: pull_request_number,
-    //   body: message
-    // });
+    const new_comment = github.rest.issues.createComment({
+      ...context.repo,
+      issue_number: pull_request_number,
+      body: message
+    });
+
+    // github.issues.createComment({
+    //   issue_number: context.issue.number,
+    //   owner: context.repo.owner,
+    //   repo: context.repo.repo,
+    //   body: '👋 Thanks for reporting!'
+    // })
 
     // await octokit.rest.issues.create({
     //   issue_number: pull_request_number,
