@@ -8,9 +8,8 @@ async function run() {
     // myToken: ${{ secrets.GITHUB_TOKEN }}
     // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
     const myToken = core.getInput('myToken');
-
+    const message = core.getInput('message');
     const octokit = github.getOctokit(myToken);
-
     const context = github.context;
     const pull_request_number = context.payload.pull_request.number;
 
