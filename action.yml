@@ -3,10 +3,6 @@ description: "Greet someone and record the time"
 inputs:
   myToken:
     description: "token for github"
-  message: # id of input
-    description: "posts message to a PR"
-    required: true
-    default: "World"
 runs:
   using: "node20"
   main: "dist/index.js"
