@@ -31106,12 +31106,12 @@ async function run() {
       body: message,
     });
 
-    const changedFiles = await octokit.rest.pulls.listFiles({
+    const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
       pull_number,
     });
 
-    console.log('changed files:', changedFiles);
+    console.log('changed files:', data);
 
   } catch (error) {
     core.setFailed(error.message);
