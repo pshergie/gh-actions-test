@@ -11,12 +11,12 @@ async function run() {
     const message = core.getInput('message');
     const octokit = github.getOctokit(myToken);
     const context = github.context;
-    const pull_request_number = context.payload.pull_request.number;
+    const pull_number = context.payload.pull_request.number;
 
     console.log('====================');
     console.log('Posting comment...');
     console.log('context', github.context);
-    console.log('pull request number', pull_request_number);
+    console.log('pull request number', pull_number);
     console.log('====================');
 
     // You can also pass in additional options as a second parameter to getOctokit
@@ -24,9 +24,16 @@ async function run() {
 
     const { data: pullRequest } = await octokit.rest.issues.createComment({
       ...context.repo,
-      issue_number: pull_request_number,
+      issue_number: pull_number,
       body: message,
     });
+
+    const changedFiles = octokit.rest.pulls.listFiles({
+      ...context.repo,
+      pull_number,
+    });
+
+    console.log('changed files:', changedFiles);
 
   } catch (error) {
     core.setFailed(error.message);
