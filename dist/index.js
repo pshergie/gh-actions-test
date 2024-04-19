@@ -31083,62 +31083,27 @@ const github = __nccwpck_require__(8555);
 
 async function run() {
   try {
-    const message = core.getInput('message');
+    // This should be a token with access to your repository scoped in as a secret.
+    // The YML workflow will need to set myToken with the GitHub Secret Token
+    // myToken: ${{ secrets.GITHUB_TOKEN }}
+    // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
     const myToken = core.getInput('myToken');
 
-    const context = github.context;
+    const octokit = github.getOctokit(myToken)
 
-    if (context.payload.pull_request == null) {
-      core.setFailed('No pull request found.');
-      return;
-    }
+    // You can also pass in additional options as a second parameter to getOctokit
+    // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
 
-    const pull_request_number = context.payload.pull_request.number;
-
-    const octokit = github.getOctokit(myToken);
-
-    github.rest.issues.createComment({
+    const { data: pullRequest } = await octokit.rest.issues.createComment({
       ...context.repo,
       issue_number: pull_request_number,
-      body: message
-    })
+      body: message,
+    });
 
-    // const new_comment = octokit.issues.createComment({
-    //   ...context.repo,
-    //   issue_number: pull_request_number,
-    //   body: message
-    // });
-
-    // const new_comment = github.rest.issues.createComment({
-    //   ...context.repo,
-    //   issue_number: pull_request_number,
-    //   body: message
-    // });
-
-    // github.issues.createComment({
-    //   issue_number: context.issue.number,
-    //   owner: context.repo.owner,
-    //   repo: context.repo.repo,
-    //   body: '👋 Thanks for reporting!'
-    // })
-
-    // await octokit.rest.issues.create({
-    //   issue_number: pull_request_number,
-    //   repo: context.repo.repo,
-    //   body: message
-    // })
-
-    // await octokit.rest.issues.createComment({
-    //   ...context.repo,
-    //   issue_number: pull_request_number,
-    //   body: message,
-    // });
   } catch (error) {
     core.setFailed(error.message);
   }
 }
-
-run();
 
 })();
 

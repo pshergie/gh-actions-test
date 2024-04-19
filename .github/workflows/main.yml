@@ -13,8 +13,8 @@ jobs:
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/github-script@v6
-      - uses: ./ # Uses an action in the root directory
+      - name: Hello world action step
+        uses: ./ # Uses an action in the root directory
         id: hello
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
