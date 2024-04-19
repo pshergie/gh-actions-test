@@ -12,9 +12,12 @@ async function run() {
     const octokit = github.getOctokit(myToken);
 
     const context = github.context;
+    const pull_request_number = context.payload.pull_request.number;
 
     console.log('====================');
     console.log('Posting comment...');
+    console.log('context', github.context);
+    console.log('pull request number', pull_request_number);
     console.log('====================');
 
     // You can also pass in additional options as a second parameter to getOctokit
