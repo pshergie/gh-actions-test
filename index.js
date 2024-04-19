@@ -20,11 +20,11 @@ async function run() {
     // You can also pass in additional options as a second parameter to getOctokit
     // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
 
-    const { data: pullRequest } = await octokit.rest.issues.createComment({
-      ...context.repo,
-      issue_number: pull_number,
-      body: message,
-    });
+    // const { data: pullRequest } = await octokit.rest.issues.createComment({
+    //   ...context.repo,
+    //   issue_number: pull_number,
+    //   body: message,
+    // });
 
     const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
@@ -34,6 +34,22 @@ async function run() {
     const listOfFiles = data.map(change => change.filename);
 
     console.log('changed files:', listOfFiles);
+
+    listOfFiles.map(async (file) => {
+      if (file.includes('src/components')) {
+        await octokit.rest.issues.createComment({
+          ...context.repo,
+          issue_number: pull_number,
+          body: "You did change file(s) in the components folder. Please make sure the changes follow the components rules.",
+        });
+      } else if (file.includes('src/utils')) {
+        await octokit.rest.issues.createComment({
+          ...context.repo,
+          issue_number: pull_number,
+          body: "You did change file(s) in the utils folder. Please make sure the changes follow the utils rules.",
+        });
+      }
+    })
 
   } catch (error) {
     core.setFailed(error.message);
