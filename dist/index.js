@@ -31097,17 +31097,23 @@ async function run() {
 
     const octokit = github.getOctokit(myToken);
 
+    github.rest.issues.createComment({
+      ...context.repo,
+      issue_number: pull_request_number,
+      body: message
+    })
+
     // const new_comment = octokit.issues.createComment({
     //   ...context.repo,
     //   issue_number: pull_request_number,
     //   body: message
     // });
 
-    const new_comment = github.rest.issues.createComment({
-      ...context.repo,
-      issue_number: pull_request_number,
-      body: message
-    });
+    // const new_comment = github.rest.issues.createComment({
+    //   ...context.repo,
+    //   issue_number: pull_request_number,
+    //   body: message
+    // });
 
     // github.issues.createComment({
     //   issue_number: context.issue.number,
