@@ -34,7 +34,7 @@ async function run() {
     //   body: message
     // })
 
-    await octokit.rest.pull_request.createComment({
+    await octokit.rest.issues.createComment({
       ...context.repo,
       issue_number: pull_request_number,
       body: message,
