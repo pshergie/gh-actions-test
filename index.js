@@ -9,7 +9,11 @@ async function run() {
     // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
     const myToken = core.getInput('myToken');
 
-    const octokit = github.getOctokit(myToken)
+    const octokit = github.getOctokit(myToken);
+
+    console.log('====================');
+    console.log('Posting comment...');
+    console.log('====================');
 
     // You can also pass in additional options as a second parameter to getOctokit
     // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
