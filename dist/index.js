@@ -31125,14 +31125,14 @@ async function run() {
     //   pull_number,
     // });
 
-    const pullRequest = await octokit.rest.pulls.get({
-      ...context.repo,
-      pull_number,
-    });
+    // const pullRequest = await octokit.rest.pulls.get({
+    //   ...context.repo,
+    //   pull_number,
+    // });
 
-    console.log('pullRequest:', pullRequest);
+    // console.log('pullRequest:', pullRequest);
 
-    const PRComments = octokit.rest.issues.listComments({
+    const PRComments = await octokit.rest.issues.listComments({
       ...context.repo,
       issue_number: pull_number,
     });
