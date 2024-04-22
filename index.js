@@ -15,7 +15,7 @@ async function run() {
       issue_number: pull_number,
     });
 
-    const isComponetsCommentExisting = !!comments.find(comment => comment.user.login === 'github-actions[bot]' && comment.body === messageComponents);
+    const isComponentsCommentExisting = !!comments.find(comment => comment.user.login === 'github-actions[bot]' && comment.body === messageComponents);
     const isUtilsCommentExisting = !!comments.find(comment => comment.user.login === 'github-actions[bot]' && comment.body === messageComponents)
 
     const { data } = await octokit.rest.pulls.listFiles({
@@ -24,7 +24,7 @@ async function run() {
     });
 
     data.map(change => change.filename).map(async (file) => {
-      if (file.includes('src/components') && !isComponetsCommentExisting) {
+      if (file.includes('src/components') && !isComponentsCommentExisting) {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
