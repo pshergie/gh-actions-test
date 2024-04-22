@@ -40,6 +40,13 @@ async function run() {
       }
     })
 
+    const comments = octokit.rest.pulls.listReviewComments({
+      ...context.repo,
+      pull_number,
+    });
+
+    console.log('review comments:', comments);
+
   } catch (error) {
     core.setFailed(error.message);
   }
