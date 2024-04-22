@@ -8,7 +8,7 @@ async function run() {
     const context = github.context;
     const pull_number = context.payload.pull_request.number;
 
-    const comments = await octokit.rest.issues.listComments({
+    const { data: comments } = await octokit.rest.issues.listComments({
       ...context.repo,
       issue_number: pull_number,
     });
