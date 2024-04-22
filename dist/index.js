@@ -31093,7 +31093,7 @@ async function run() {
       issue_number: pull_number,
     });
 
-    const isCommentExisting = comments.some(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes('Solar System Exploration, 1950s – 1960s'))
+    const isCommentExisting = Array.isArray(comments) && comments.some(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes('Solar System Exploration, 1950s – 1960s'))
 
     console.log('pullRequest comments:', comments?.data);
     console.log('user', comments?.data[0]?.user)
