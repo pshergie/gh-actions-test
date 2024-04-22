@@ -21,16 +21,15 @@ async function run() {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
-          body: `### Solar System Exploration, 1950s – 1960s
-          - [ ] Mercury
-          - [x] Venus
-          - [x] Earth (Orbit/Moon)
-          - [x] Mars
-          - [ ] Jupiter
-          - [ ] Saturn
-          - [ ] Uranus
-          - [ ] Neptune
-          - [ ] Comet Haley`,
+          body:
+            `# Solar System Exploration, 1950s – 1960s
+
+- [ ] Mercury
+- [x] Venus
+- [x] Earth (Orbit/Moon)
+- [x] Mars
+- [ ] Jupiter
+- [ ] Saturn`,
         });
       } else if (file.includes('src/utils')) {
         await octokit.rest.issues.createComment({
