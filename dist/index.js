@@ -31083,7 +31083,6 @@ const github = __nccwpck_require__(8555);
 
 async function run() {
   try {
-    // const messageShort = core.getInput('messageShort');
     const message = core.getInput('message');
     const myToken = core.getInput('myToken');
     const octokit = github.getOctokit(myToken);
@@ -31124,7 +31123,7 @@ async function run() {
   }
 }
 
-run()
+run();
 
 })();
 

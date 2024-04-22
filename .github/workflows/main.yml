@@ -16,7 +16,6 @@ jobs:
         id: hello
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
-          messageShort: "Solar System Exploration, 1950s – 1960s"
           message: |
             # Solar System Exploration, 1950s – 1960s
             - [ ] Mercury
