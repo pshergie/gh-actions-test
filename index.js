@@ -21,13 +21,13 @@ async function run() {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
-          body: "You did change file(s) in the components folder. Please make sure the changes follow the components rules.",
+          body: "**Bold text here**",
         });
       } else if (file.includes('src/utils')) {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
-          body: "You did change file(s) in the utils folder. Please make sure the changes follow the utils rules.",
+          body: "**Bold text here**",
         });
       }
     })

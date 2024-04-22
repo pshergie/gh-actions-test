@@ -1,9 +1,4 @@
-on:
-  # Trigger the workflow on push or pull request
-  pull_request:
-    branches:
-      - main
-      - master
+on: [push]
 
 jobs:
   comment:
