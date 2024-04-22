@@ -31126,16 +31126,14 @@ async function run() {
     // });
 
     const pullRequest = await octokit.rest.pulls.get({
-      owner,
-      repo,
+      ...context.repo,
       pull_number,
     });
 
     console.log('pullRequest:', pullRequest);
 
     const PRComments = octokit.rest.issues.listComments({
-      owner,
-      repo,
+      ...context.repo,
       issue_number: pull_number,
     });
 
