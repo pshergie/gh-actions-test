@@ -3,7 +3,7 @@ const github = require('@actions/github');
 
 async function run() {
   try {
-    const messageShort = core.getInput('messageShort');
+    // const messageShort = core.getInput('messageShort');
     const message = core.getInput('message');
     const myToken = core.getInput('myToken');
     const octokit = github.getOctokit(myToken);
@@ -15,7 +15,7 @@ async function run() {
       issue_number: pull_number,
     });
 
-    const isCommentExisting = Array.isArray(comments) && comments.some(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes(messageShort))
+    const isCommentExisting = Array.isArray(comments) && comments.some(comment => comment.user.login === 'github-actions[bot]' && comment.body === message)
 
     const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
@@ -25,7 +25,7 @@ async function run() {
     const listOfFiles = data.map(change => change.filename);
 
     listOfFiles.map(async (file) => {
-      if (file.includes('src/components') && !!isCommentExisting) {
+      if (file.includes('src/components') && !isCommentExisting) {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
