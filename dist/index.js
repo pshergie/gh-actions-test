@@ -31094,7 +31094,7 @@ async function run() {
       issue_number: pull_number,
     });
 
-    const isCommentExisting = Array.isArray(comments) && comments.some(comment => comment.user.login === 'github-actions[bot]' && comment.body === message)
+    const isCommentExisting = !!comments.find(comment => comment.user.login === 'github-actions[bot]' && comment.body === message)
 
     const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
