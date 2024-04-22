@@ -40,12 +40,18 @@ async function run() {
       }
     })
 
-    const comments = await octokit.rest.pulls.listReviewComments({
-      ...context.repo,
+    // const comments = await octokit.rest.pulls.listReviewComments({
+    //   ...context.repo,
+    //   pull_number,
+    // });
+
+    const pullRequest = await octokit.rest.pulls.get({
+      owner,
+      repo,
       pull_number,
     });
 
-    console.log('review comments:', comments);
+    console.log('pullRequest:', pullRequest);
 
   } catch (error) {
     core.setFailed(error.message);
