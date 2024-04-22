@@ -8,6 +8,15 @@ async function run() {
     const context = github.context;
     const pull_number = context.payload.pull_request.number;
 
+    const comments = await octokit.rest.issues.listComments({
+      ...context.repo,
+      issue_number: pull_number,
+    });
+
+    const isCommentExisting = comments.some(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes('Solar System Exploration, 1950s – 1960s'))
+
+    console.log('pullRequest comments:', comments?.data);
+    console.log('user', comments?.data[0]?.user)
 
     const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
@@ -17,7 +26,7 @@ async function run() {
     const listOfFiles = data.map(change => change.filename);
 
     listOfFiles.map(async (file) => {
-      if (file.includes('src/components')) {
+      if (file.includes('src/components') && !isCommentExisting) {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
@@ -31,7 +40,7 @@ async function run() {
 - [ ] Jupiter
 - [ ] Saturn`,
         });
-      } else if (file.includes('src/utils')) {
+      } else if (file.includes('src/utils') && !isCommentExisting) {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
@@ -39,27 +48,6 @@ async function run() {
         });
       }
     })
-
-    // const comments = await octokit.rest.pulls.listReviewComments({
-    //   ...context.repo,
-    //   pull_number,
-    // });
-
-    // const pullRequest = await octokit.rest.pulls.get({
-    //   ...context.repo,
-    //   pull_number,
-    // });
-
-    // console.log('pullRequest:', pullRequest);
-
-    const PRComments = await octokit.rest.issues.listComments({
-      ...context.repo,
-      issue_number: pull_number,
-    });
-
-    console.log('pullRequest comments:', PRComments?.data);
-    console.log('user', PRComments?.data[0]?.user)
-
   } catch (error) {
     core.setFailed(error.message);
   }
