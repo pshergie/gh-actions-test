@@ -57,7 +57,8 @@ async function run() {
       issue_number: pull_number,
     });
 
-    console.log('pullRequest comments:', PRComments);
+    console.log('pullRequest comments:', PRComments?.data);
+    console.log('user', PRComments?.data[0]?.user)
 
   } catch (error) {
     core.setFailed(error.message);
