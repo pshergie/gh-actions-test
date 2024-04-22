@@ -9,6 +9,8 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Create a comment action step
         uses: ./ # Uses an action in the root directory
         id: hello
