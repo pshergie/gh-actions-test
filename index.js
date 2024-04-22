@@ -53,6 +53,14 @@ async function run() {
 
     console.log('pullRequest:', pullRequest);
 
+    const PRComments = octokit.rest.issues.listComments({
+      owner,
+      repo,
+      issue_number: pull_number,
+    });
+
+    console.log('pullRequest comments:', PRComments);
+
   } catch (error) {
     core.setFailed(error.message);
   }
