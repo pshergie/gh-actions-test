@@ -1,5 +1,4 @@
 on:
-  # Trigger the workflow on push or pull request
   pull_request:
     branches:
       - main
@@ -12,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Create a comment action step
-        uses: ./ # Uses an action in the root directory
+        uses: ./
         id: hello
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
