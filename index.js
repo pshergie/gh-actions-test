@@ -3,7 +3,8 @@ const github = require('@actions/github');
 
 async function run() {
   try {
-    const message = core.getInput('message');
+    const messageComponents = core.getInput('messageComponents');
+    const messageUtils = core.getInput('messageUtils');
     const myToken = core.getInput('myToken');
     const octokit = github.getOctokit(myToken);
     const context = github.context;
@@ -14,7 +15,8 @@ async function run() {
       issue_number: pull_number,
     });
 
-    const isCommentExisting = !!comments.find(comment => comment.user.login === 'github-actions[bot]' && comment.body === message)
+    const isComponetsCommentExisting = !!comments.find(comment => comment.user.login === 'github-actions[bot]' && comment.body === messageComponents);
+    const isUtilsCommentExisting = !!comments.find(comment => comment.user.login === 'github-actions[bot]' && comment.body === messageComponents)
 
     const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
@@ -22,17 +24,17 @@ async function run() {
     });
 
     data.map(change => change.filename).map(async (file) => {
-      if (file.includes('src/components') && !isCommentExisting) {
+      if (file.includes('src/components') && !isComponetsCommentExisting) {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
           body: message,
         });
-      } else if (file.includes('src/utils') && !isCommentExisting) {
+      } else if (file.includes('src/utils') && !isUtilsCommentExisting) {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
-          body: "**Bold text here**",
+          body: messageUtils,
         });
       }
     })

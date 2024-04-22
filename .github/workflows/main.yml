@@ -15,7 +15,7 @@ jobs:
         id: hello
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
-          message: |
+          messageComponents: |
             # Solar System Exploration, 1950s – 1960s
             - [ ] Mercury
             - [x] Venus
@@ -23,3 +23,4 @@ jobs:
             - [x] Mars
             - [ ] Jupiter
             - [ ] Saturn
+          messageUtils: "**Bold text here**"
