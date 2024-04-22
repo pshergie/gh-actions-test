@@ -21,9 +21,7 @@ async function run() {
       pull_number,
     });
 
-    const listOfFiles = data.map(change => change.filename);
-
-    listOfFiles.map(async (file) => {
+    data.map(change => change.filename).map(async (file) => {
       if (file.includes('src/components') && !isCommentExisting) {
         await octokit.rest.issues.createComment({
           ...context.repo,
