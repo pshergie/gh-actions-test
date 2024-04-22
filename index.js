@@ -15,9 +15,6 @@ async function run() {
 
     const isCommentExisting = Array.isArray(comments) && comments.some(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes('Solar System Exploration, 1950s – 1960s'))
 
-    console.log('pullRequest comments:', comments);
-    console.log('user', comments[0]?.user)
-
     const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
       pull_number,

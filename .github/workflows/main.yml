@@ -9,11 +9,7 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Hello world action step
+      - name: Create a comment action step
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
