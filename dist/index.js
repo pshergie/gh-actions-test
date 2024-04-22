@@ -31120,7 +31120,7 @@ async function run() {
       }
     })
 
-    const comments = octokit.rest.pulls.listReviewComments({
+    const comments = await octokit.rest.pulls.listReviewComments({
       ...context.repo,
       pull_number,
     });
