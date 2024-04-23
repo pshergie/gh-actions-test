@@ -31076,63 +31076,43 @@ module.exports = parseParams
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
+var exports = __webpack_exports__;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __nccwpck_require__(9773);
 const github = __nccwpck_require__(8555);
-
 async function run() {
-  try {
-    const messageComponents = core.getInput("messageComponents");
-    const messageUtils = core.getInput("messageUtils");
-    const myToken = core.getInput("myToken");
-    const octokit = github.getOctokit(myToken);
-    const context = github.context;
-    const pull_number = context.payload.pull_request.number;
-
-    const { data: comments } = await octokit.rest.issues.listComments({
-      ...context.repo,
-      issue_number: pull_number,
-    });
-
-    const isComponentsCommentExisting = !!comments.find(
-      (comment) =>
-        comment.user.login === "github-actions[bot]" &&
-        comment.body === messageComponents,
-    );
-    const isUtilsCommentExisting = !!comments.find(
-      (comment) =>
-        comment.user.login === "github-actions[bot]" &&
-        comment.body === messageComponents,
-    );
-
-    const { data } = await octokit.rest.pulls.listFiles({
-      ...context.repo,
-      pull_number,
-    });
-
-    data
-      .map((change) => change.filename)
-      .map(async (file) => {
-        if (file.includes("src/components") && !isComponentsCommentExisting) {
-          await octokit.rest.issues.createComment({
-            ...context.repo,
-            issue_number: pull_number,
-            body: messageComponents,
-          });
-        } else if (file.includes("src/utils") && !isUtilsCommentExisting) {
-          await octokit.rest.issues.createComment({
-            ...context.repo,
-            issue_number: pull_number,
-            body: messageUtils,
-          });
-        }
-      });
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+    try {
+        const messageComponents = core.getInput("messageComponents");
+        const messageUtils = core.getInput("messageUtils");
+        const myToken = core.getInput("myToken");
+        const octokit = github.getOctokit(myToken);
+        const context = github.context;
+        const pull_number = context.payload.pull_request.number;
+        const { data: comments } = await octokit.rest.issues.listComments(Object.assign(Object.assign({}, context.repo), { issue_number: pull_number }));
+        const isComponentsCommentExisting = !!comments.find((comment) => comment.user.login === "github-actions[bot]" &&
+            comment.body === messageComponents);
+        const isUtilsCommentExisting = !!comments.find((comment) => comment.user.login === "github-actions[bot]" &&
+            comment.body === messageComponents);
+        const { data } = await octokit.rest.pulls.listFiles(Object.assign(Object.assign({}, context.repo), { pull_number }));
+        data
+            .map((change) => change.filename)
+            .map(async (file) => {
+            if (file.includes("src/components") && !isComponentsCommentExisting) {
+                await octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_number, body: messageComponents }));
+            }
+            else if (file.includes("src/utils") && !isUtilsCommentExisting) {
+                await octokit.rest.issues.createComment(Object.assign(Object.assign({}, context.repo), { issue_number: pull_number, body: messageUtils }));
+            }
+        });
+    }
+    catch (error) {
+        core.setFailed(error.message);
+    }
 }
-
 run();
 
 })();
