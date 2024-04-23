@@ -3,38 +3,44 @@ const github = require('@actions/github');
 
 async function run() {
   try {
+    const messageComponents = core.getInput('messageComponents');
+    const messageUtils = core.getInput('messageUtils');
     const myToken = core.getInput('myToken');
     const octokit = github.getOctokit(myToken);
     const context = github.context;
     const pull_number = context.payload.pull_request.number;
 
+    const { data: comments } = await octokit.rest.issues.listComments({
+      ...context.repo,
+      issue_number: pull_number,
+    });
+
+    const isComponentsCommentExisting = !!comments.find(comment => comment.user.login === 'github-actions[bot]' && comment.body === messageComponents);
+    const isUtilsCommentExisting = !!comments.find(comment => comment.user.login === 'github-actions[bot]' && comment.body === messageComponents)
 
     const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
       pull_number,
     });
 
-    const listOfFiles = data.map(change => change.filename);
-
-    listOfFiles.map(async (file) => {
-      if (file.includes('src/components')) {
+    data.map(change => change.filename).map(async (file) => {
+      if (file.includes('src/components') && !isComponentsCommentExisting) {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
-          body: "You did change file(s) in the components folder. Please make sure the changes follow the components rules.",
+          body: message,
         });
-      } else if (file.includes('src/utils')) {
+      } else if (file.includes('src/utils') && !isUtilsCommentExisting) {
         await octokit.rest.issues.createComment({
           ...context.repo,
           issue_number: pull_number,
-          body: "You did change file(s) in the utils folder. Please make sure the changes follow the utils rules.",
+          body: messageUtils,
         });
       }
     })
-
   } catch (error) {
     core.setFailed(error.message);
   }
 }
 
-run()
+run();
