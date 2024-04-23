@@ -31096,7 +31096,7 @@ async function run() {
         const isComponentsCommentExisting = !!comments.find((comment) => comment.user.login === "github-actions[bot]" &&
             comment.body === messageComponents);
         const isUtilsCommentExisting = !!comments.find((comment) => comment.user.login === "github-actions[bot]" &&
-            comment.body === messageComponents);
+            comment.body === messageUtils);
         const { data } = await octokit.rest.pulls.listFiles(Object.assign(Object.assign({}, context.repo), { pull_number }));
         data
             .map((change) => change.filename)

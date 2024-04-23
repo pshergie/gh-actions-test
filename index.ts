@@ -23,7 +23,7 @@ async function run() {
     const isUtilsCommentExisting = !!comments.find(
       (comment) =>
         comment.user.login === "github-actions[bot]" &&
-        comment.body === messageComponents,
+        comment.body === messageUtils,
     );
 
     const { data } = await octokit.rest.pulls.listFiles({
