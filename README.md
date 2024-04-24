@@ -56,3 +56,4 @@ We can update all dependencies at least once per week.
 
 - Guide 1
 - Guide 2
+- Guide 3
