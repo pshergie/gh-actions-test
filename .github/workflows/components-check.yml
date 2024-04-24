@@ -1,0 +1,19 @@
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "src/components"
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Create a comment action step
+        uses: ./
+        id: components-check
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+          message: "Detected: changes in **components** folder have been made"
