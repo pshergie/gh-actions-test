@@ -3,7 +3,7 @@ on:
     branches:
       - master
     paths:
-      - "src/utils"
+      - "src/utils/**"
 
 jobs:
   comment:
