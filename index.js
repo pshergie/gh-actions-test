@@ -2,6 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 
 async function run() {
+  console.log("trying...");
   try {
     const message = core.getInput("message");
     const myToken = core.getInput("myToken");
