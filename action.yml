@@ -1,8 +1,0 @@
-name: "Hello World"
-description: "Greet someone and record the time"
-inputs:
-  myToken:
-    description: "token for github"
-runs:
-  using: "node20"
-  main: "dist/index.js"
