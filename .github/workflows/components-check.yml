@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Create a comment action step
-        uses: ./
+        uses: ./.github/actions/setup-composite
         id: components-check
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
