@@ -5,4 +5,4 @@ inputs:
     description: "token for github"
 runs:
   using: "node20"
-  main: "../../../dist/index.js"
+  main: "gh-actions-test/dist/index.js"
