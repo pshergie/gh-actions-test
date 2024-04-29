@@ -19,7 +19,7 @@ async function run() {
     });
 
     settingsMapped.map((setting) => {
-      for (const [path, msg] of Object.entries(settingsMapped)) {
+      for (const [path, msg] of Object.entries(setting)) {
         console.log(`${path}: ${msg}`);
       }
     });
