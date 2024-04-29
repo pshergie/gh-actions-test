@@ -4,9 +4,9 @@ const github = require("@actions/github");
 async function run() {
   console.log("trying...");
   try {
-    const input = core.getInput("paths");
-    const paths = input.split("\n");
-    console.log("PATHS", paths);
+    const settings = core.getInput("settings").split("\n");
+    console.log("PATHS", settings);
+    const settingsMapped = settings.map((setting) => JSON.parse(setting));
     const myToken = core.getInput("myToken");
     const octokit = github.getOctokit(myToken);
     const context = github.context;
@@ -17,7 +17,7 @@ async function run() {
       issue_number: pull_number,
     });
 
-    for (const [path, msg] of Object.entries(paths)) {
+    for (const [path, msg] of Object.entries(settingsMapped)) {
       console.log(`${path}: ${msg}`);
     }
 
