@@ -15,5 +15,5 @@ jobs:
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
           paths: |-
-            path: "src/components":, message: "Detected: changes in **components** folder have been made"
-            path: "src/utils":, message: "Detected: changes in **components** folder have been made"
+            {"path": "src/components":, "message": "Detected: changes in **components** folder have been made"}
+            {"path": "src/utils":, "message": "Detected: changes in **components** folder have been made"}
