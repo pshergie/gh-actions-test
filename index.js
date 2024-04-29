@@ -5,7 +5,7 @@ async function run() {
   console.log("trying...");
   try {
     const input = core.getInput("paths");
-    const paths = input.split(",");
+    const paths = input.split("\n");
     console.log("PATHS", paths);
     const myToken = core.getInput("myToken");
     const octokit = github.getOctokit(myToken);
