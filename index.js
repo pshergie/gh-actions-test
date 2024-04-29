@@ -17,12 +17,12 @@ async function run() {
       issue_number: pull_number,
     });
 
-    const { data } = await octokit.rest.pulls.listFiles({
+    const { data: fileLists } = await octokit.rest.pulls.listFiles({
       ...context.repo,
       pull_number,
     });
 
-    const changedFilesPaths = data.map((diff) => diff.filename);
+    const changedFilesPaths = fileLists.map((diff) => diff.filename);
 
     console.log("changedFilesPaths:", changedFilesPaths);
 
@@ -34,7 +34,7 @@ async function run() {
             comment.body === message,
         );
 
-        if (isCommentExisting) {
+        if (!isCommentExisting) {
           await octokit.rest.issues.createComment({
             ...context.repo,
             issue_number: pull_number,
