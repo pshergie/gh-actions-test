@@ -31086,6 +31086,7 @@ async function run() {
   try {
     const paths = core.getInput("paths");
     console.log("PATHS", paths);
+    console.log(typeof paths);
     const myToken = core.getInput("myToken");
     const octokit = github.getOctokit(myToken);
     const context = github.context;
