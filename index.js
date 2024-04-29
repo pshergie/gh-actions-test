@@ -27,7 +27,7 @@ async function run() {
     console.log("changedFilesPaths:", changedFilesPaths);
 
     settingsMapped.map(async ({ path, message }) => {
-      if (changedFilesPaths.includes(path)) {
+      if (changedFilesPaths.some((p) => p.includes(path))) {
         const isCommentExisting = !!comments.find(
           (comment) =>
             comment.user.login === "github-actions[bot]" &&
