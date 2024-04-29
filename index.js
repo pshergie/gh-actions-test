@@ -19,10 +19,47 @@ async function run() {
     });
 
     settingsMapped.map((setting) => {
-      for (const [path, msg] of Object.entries(setting)) {
-        console.log(`${path}: ${msg}`);
+      for (const [path, message] of Object.entries(setting)) {
+        console.log(`${path}: ${message}`);
       }
     });
+
+    const { data } = await octokit.rest.pulls.listFiles({
+      ...context.repo,
+      pull_number,
+    });
+
+    const changedFilesPaths = data.map((diff) => diff.filename);
+
+    settingsMapped.map(async ({ path, message }) => {
+      if (changedFilesPaths.includes(path)) {
+        const isCommentExisting = !!comments.find(
+          (comment) =>
+            comment.user.login === "github-actions[bot]" &&
+            comment.body === message,
+        );
+
+        if (isCommentExisting) {
+          await octokit.rest.issues.createComment({
+            ...context.repo,
+            issue_number: pull_number,
+            body: message,
+          });
+        }
+      }
+    });
+
+    // data
+    //   .map((diff) => diff.filename)
+    //   .map(async (file) => {
+    //     if (file.includes(path) && !isComponentsCommentExisting) {
+    //       await octokit.rest.issues.createComment({
+    //         ...context.repo,
+    //         issue_number: pull_number,
+    //         body: message,
+    //       });
+    //     }
+    //   });
 
     // const isCommentExisting = !!comments.find(
     //   (comment) =>
