@@ -2,8 +2,6 @@ on:
   pull_request:
     branches:
       - master
-    paths:
-      - "src/utils/**"
 
 jobs:
   comment:
@@ -11,9 +9,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Create a comment action step
+      - name: Check component dependencies
         uses: ./.github/actions/setup-composite
-        id: utils-check
+        id: components-check
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
-          message: "You have changed something in **utils**. Just saying."
+          paths: |-
+            "src/components": "Detected: changes in **components** folder have been made"
+            "src/utils": "Detected: changes in **components** folder have been made"

@@ -31082,8 +31082,10 @@ const core = __nccwpck_require__(9773);
 const github = __nccwpck_require__(8555);
 
 async function run() {
+  console.log("trying...");
   try {
-    const message = core.getInput("message");
+    const paths = core.getInput("paths");
+    console.log("PATHS", paths);
     const myToken = core.getInput("myToken");
     const octokit = github.getOctokit(myToken);
     const context = github.context;
@@ -31094,19 +31096,23 @@ async function run() {
       issue_number: pull_number,
     });
 
-    const isCommentExisting = !!comments.find(
-      (comment) =>
-        comment.user.login === "github-actions[bot]" &&
-        comment.body === message,
-    );
-
-    if (!isCommentExisting) {
-      await octokit.rest.issues.createComment({
-        ...context.repo,
-        issue_number: pull_number,
-        body: message,
-      });
+    for (const [path, msg] of Object.entries(paths)) {
+      console.log(`${path}: ${msg}`);
     }
+
+    // const isCommentExisting = !!comments.find(
+    //   (comment) =>
+    //     comment.user.login === "github-actions[bot]" &&
+    //     comment.body === message,
+    // );
+
+    // if (!isCommentExisting) {
+    //   await octokit.rest.issues.createComment({
+    //     ...context.repo,
+    //     issue_number: pull_number,
+    //     body: message,
+    //   });
+    // }
   } catch (error) {
     core.setFailed(error.message);
   }
