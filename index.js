@@ -17,9 +17,11 @@ async function run() {
       issue_number: pull_number,
     });
 
-    for (const [path, msg] of Object.entries(settingsMapped)) {
-      console.log(`${path}: ${msg}`);
-    }
+    settingsMapped.map((setting) => {
+      for (const [path, msg] of Object.entries(settingsMapped)) {
+        console.log(`${path}: ${msg}`);
+      }
+    });
 
     // const isCommentExisting = !!comments.find(
     //   (comment) =>
