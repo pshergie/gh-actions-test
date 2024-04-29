@@ -5,7 +5,6 @@ async function run() {
   console.log("trying...");
   try {
     const settings = core.getInput("settings").split("\n");
-    console.log("PATHS", settings);
     const settingsMapped = settings.map((setting) => JSON.parse(setting));
     console.log("settingsMapped:", settingsMapped);
     const myToken = core.getInput("myToken");
@@ -18,18 +17,14 @@ async function run() {
       issue_number: pull_number,
     });
 
-    settingsMapped.map((setting) => {
-      for (const [path, message] of Object.entries(setting)) {
-        console.log(`${path}: ${message}`);
-      }
-    });
-
     const { data } = await octokit.rest.pulls.listFiles({
       ...context.repo,
       pull_number,
     });
 
     const changedFilesPaths = data.map((diff) => diff.filename);
+
+    console.log("changedFilesPaths:", changedFilesPaths);
 
     settingsMapped.map(async ({ path, message }) => {
       if (changedFilesPaths.includes(path)) {
