@@ -31087,6 +31087,7 @@ async function run() {
     const settings = core.getInput("settings").split("\n");
     console.log("PATHS", settings);
     const settingsMapped = settings.map((setting) => JSON.parse(setting));
+    console.log("settingsMapped:", settingsMapped);
     const myToken = core.getInput("myToken");
     const octokit = github.getOctokit(myToken);
     const context = github.context;
