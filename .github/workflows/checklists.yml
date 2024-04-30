@@ -1,0 +1,34 @@
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check component dependencies
+        uses: ./.github/actions/setup-composite
+        id: components-check
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # insert your JSON under "settings" using the following scheme:
+          # [
+          #   {
+          #     "paths": string | string[],
+          #     "message": string
+          #   }
+          # ]
+          settings: |-
+            [
+              {
+                "paths": "src/components",
+                "message": "Detected: changes in **components** folder have been made"
+              },
+              {
+                "paths": "src/utils",
+                "message": "Detected: changes in **utils** folder have been made"
+              }
+            ]
