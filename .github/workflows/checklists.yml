@@ -24,11 +24,7 @@ jobs:
           settings: |-
             [
               {
-                "paths": "src/components",
-                "message": "Detected: changes in **components** folder have been made"
-              },
-              {
-                "paths": "src/utils",
-                "message": "Detected: changes in **utils** folder have been made"
+                "paths": ["src/components", "src/utils"],
+                "message": "Detected: changes in **components** or **utils** folders have been made"
               }
             ]
