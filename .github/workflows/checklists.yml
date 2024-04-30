@@ -13,7 +13,22 @@ jobs:
         uses: ./.github/actions/setup-composite
         id: components-check
         with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # insert your JSON under "settings" using the following scheme:
+          # [
+          #   {
+          #     "paths": string | string[],
+          #     "message": string
+          #   }
+          # ]
           settings: |-
-            {"path": "src/components", "message": "Detected: changes in **components** folder have been made"}
-            {"path": "src/utils", "message": "Detected: changes in **utils** folder have been made"}
+            [
+              {
+                "paths": "src/components",
+                "message": "Detected: changes in **components** folder have been made"
+              },
+              {
+                "paths": "src/utils",
+                "message": "Detected: changes in **utils** folder have been made"
+              }
+            ]

@@ -7,8 +7,8 @@ async function run() {
       .getInput("settings")
       .split("\n")
       .map((setting) => JSON.parse(setting));
-    const myToken = core.getInput("myToken");
-    const octokit = github.getOctokit(myToken);
+    const token = core.getInput("token");
+    const octokit = github.getOctokit(token);
     const context = github.context;
     const pull_number = context.payload.pull_request.number;
 
@@ -22,11 +22,25 @@ async function run() {
       pull_number,
     });
 
-    const changedFilesPaths = fileLists.map((diff) => diff.filename);
+    const changedFilesPaths = fileLists.map((diff) => diff.filename).join(", ");
 
-    settings.map(async ({ path, message }) => {
-      if (changedFilesPaths.some((p) => p.includes(path))) {
-        const isCommentExisting = !!comments.find(
+    const checkDiff = (paths) => {
+      if (typeof paths === "string") {
+        return changedFilesPaths.includes(paths);
+      } else if (Array.isArray(paths)) {
+        return paths.some((path) => changedFilesPaths.includes(path));
+      } else {
+        throw new Error(
+          `Wrong type for 'paths' variable. It should be either string or an array of strings but is ${typeof paths}.`,
+        );
+      }
+    };
+
+    settings.map(async ({ paths, message }) => {
+      let areTargetPathsChanged = checkDiff(paths);
+
+      if (areTargetPathsChanged) {
+        const isCommentExisting = comments.some(
           (comment) =>
             comment.user.login === "github-actions[bot]" &&
             comment.body === message,
