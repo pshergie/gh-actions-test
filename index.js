@@ -3,7 +3,18 @@ const github = require("@actions/github");
 
 async function run() {
   try {
-    const settings = JSON.parse(core.getInput("settings"));
+    const settings = [];
+    core
+      .getInput("settings")
+      .split("\n")
+      .map((line, i) => {
+        i % 2 === 0
+          ? settingsMapped.push({
+              paths: line.split("paths: ")[1],
+            })
+          : (settingsMapped[settingsMapped.length - 1].message =
+              line.split("message: ")[1]);
+      });
     console.log("SETTINGS", settings);
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);
