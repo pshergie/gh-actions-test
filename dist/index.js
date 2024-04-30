@@ -31083,10 +31083,8 @@ const github = __nccwpck_require__(8555);
 
 async function run() {
   try {
-    const settings = core
-      .getInput("settings")
-      .split("\n")
-      .map((setting) => JSON.parse(setting));
+    const settings = JSON.parse(core.getInput("settings"));
+    console.log("SETTINGS", settings);
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);
     const context = github.context;
