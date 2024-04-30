@@ -31089,10 +31089,10 @@ async function run() {
       .split("\n")
       .map((line, i) => {
         i % 2 === 0
-          ? settingsMapped.push({
+          ? settings.push({
               paths: line.split("paths: ")[1],
             })
-          : (settingsMapped[settingsMapped.length - 1].message =
+          : (settings[settings.length - 1].message =
               line.split("message: ")[1]);
       });
     console.log("SETTINGS", settings);
