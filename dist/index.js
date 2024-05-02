@@ -33256,7 +33256,7 @@ async function run() {
         } else if (line.startsWith("message:")) {
           settings[settings.length - 1].message = line.split("message: ")[1];
         } else {
-          settings[settings.length - 1].message += line;
+          settings[settings.length - 1].message += `\n${line}`;
         }
       });
     console.log("SETTINGS", settings);
