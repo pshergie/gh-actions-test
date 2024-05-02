@@ -20,14 +20,8 @@ jobs:
             paths: src/utils
             message: Detected: changes in **utils** folder have been made
             paths: *.js
-            message: ### Solar System Exploration, 1950s – 1960s
+            message: ### Please tick the following checkboxes;
 
-            - [ ] Mercury
-            - [x] Venus
-            - [x] Earth (Orbit/Moon)
-            - [x] Mars
-            - [ ] Jupiter
-            - [ ] Saturn
-            - [ ] Uranus
-            - [ ] Neptune
-            - [ ] Comet Haley
+            - [ ] the code is tested
+            - [ ] files are compressed
+            - [ ] files contain no errors
