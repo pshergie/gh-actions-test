@@ -33246,7 +33246,7 @@ const checkDiff = (paths, diffFilesPaths) => {
   if (Array.isArray(paths)) {
     return paths.some((path) =>
       diffFilesPaths.some(
-        (diffPath) => diffPath.includes(path) || minimatch(diffPath, paths),
+        (diffPath) => diffPath.includes(path) || minimatch(diffPath, path),
       ),
     );
   } else {
