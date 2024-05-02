@@ -21,6 +21,11 @@ const parseMarkdown = (markdown) => {
 };
 
 const checkDiff = (paths, diffFilesPaths) => {
+  console.log("");
+  console.log("paths", paths);
+  console.log("diffFilesPaths", diffFilesPaths);
+  console.log("");
+
   if (Array.isArray(paths)) {
     return paths.some((path) =>
       diffFilesPaths.some(
