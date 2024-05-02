@@ -8,7 +8,7 @@ const parseMarkdown = (markdown) => {
   markdown.split("\n").map((line) => {
     if (line.startsWith("paths:")) {
       result.push({
-        paths: line.split("paths: ")[1],
+        paths: line.split("paths: ")[1].split(","),
       });
     } else if (line.startsWith("message:")) {
       result[result.length - 1].message = line.split("message: ")[1];
@@ -21,11 +21,7 @@ const parseMarkdown = (markdown) => {
 };
 
 const checkDiff = (paths, diffFilesPaths) => {
-  if (typeof paths === "string") {
-    return diffFilesPaths.some(
-      (diffPath) => diffPath.includes(paths) || minimatch(diffPath, paths),
-    );
-  } else if (Array.isArray(paths)) {
+  if (Array.isArray(paths)) {
     return paths.some((path) =>
       diffFilesPaths.some(
         (diffPath) => diffPath.includes(path) || minimatch(diffPath, paths),
@@ -33,7 +29,7 @@ const checkDiff = (paths, diffFilesPaths) => {
     );
   } else {
     throw new Error(
-      `Wrong type for 'paths' variable. It should be either string or an array of strings but is ${typeof paths}.`,
+      `Wrong type for 'paths' variable (${typeof paths}). Make sure you followed the formatting rules.`,
     );
   }
 };
