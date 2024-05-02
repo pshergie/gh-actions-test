@@ -19,3 +19,5 @@ jobs:
             message: Detected: changes in **components** folder have been made
             paths: src/utils
             message: Detected: changes in **utils** folder have been made
+            paths: *.js
+            message: javascript files were touched

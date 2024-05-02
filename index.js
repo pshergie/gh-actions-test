@@ -1,5 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
+const { minimatch } = require("minimatch");
 
 async function run() {
   try {
@@ -35,10 +36,14 @@ async function run() {
 
     const checkDiff = (paths) => {
       if (typeof paths === "string") {
-        return changedFilesPaths.some((diffPath) => diffPath.includes(paths));
+        return changedFilesPaths.some(
+          (diffPath) => diffPath.includes(paths) || minimatch(diffPath, paths),
+        );
       } else if (Array.isArray(paths)) {
         return paths.some((path) =>
-          changedFilesPaths.some((diffPath) => diffPath.includes(path)),
+          changedFilesPaths.some(
+            (diffPath) => diffPath.includes(path) || minimatch(diffPath, paths),
+          ),
         );
       } else {
         throw new Error(
