@@ -2,6 +2,24 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const { minimatch } = require("minimatch");
 
+const parseMarkdown = (markdown) => {
+  const result = [];
+
+  markdown.split("\n").map((line) => {
+    if (line.startsWith("paths:")) {
+      settings.push({
+        paths: line.split("paths: ")[1],
+      });
+    } else if (line.startsWith("message:")) {
+      settings[settings.length - 1].message = line.split("message: ")[1];
+    } else {
+      settings[settings.length - 1].message += `\n${line}`;
+    }
+  });
+
+  return result;
+};
+
 const checkDiff = (paths, diffFilesPaths) => {
   if (typeof paths === "string") {
     return diffFilesPaths.some(
@@ -20,23 +38,36 @@ const checkDiff = (paths, diffFilesPaths) => {
   }
 };
 
+const postComment = async (
+  paths,
+  message,
+  diffFilesPaths,
+  comments,
+  context,
+  octokit,
+) => {
+  let areTargetPathsChanged = checkDiff(paths, diffFilesPaths);
+
+  if (areTargetPathsChanged) {
+    const isCommentExisting = comments.some(
+      (comment) =>
+        comment.user.login === "github-actions[bot]" &&
+        comment.body === message,
+    );
+
+    if (!isCommentExisting) {
+      await octokit.rest.issues.createComment({
+        ...context.repo,
+        issue_number: pull_number,
+        body: message,
+      });
+    }
+  }
+};
+
 async function run() {
   try {
-    const settings = [];
-    core
-      .getInput("settings")
-      .split("\n")
-      .map((line) => {
-        if (line.startsWith("paths:")) {
-          settings.push({
-            paths: line.split("paths: ")[1],
-          });
-        } else if (line.startsWith("message:")) {
-          settings[settings.length - 1].message = line.split("message: ")[1];
-        } else {
-          settings[settings.length - 1].message += `\n${line}`;
-        }
-      });
+    const settings = parseMarkdown(core.getInput("settings"));
     console.log("SETTINGS", settings);
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);
@@ -55,25 +86,17 @@ async function run() {
 
     const diffFilesPaths = fileLists.map((diff) => diff.filename);
 
-    settings.map(async ({ paths, message }) => {
-      let areTargetPathsChanged = checkDiff(paths, diffFilesPaths);
-
-      if (areTargetPathsChanged) {
-        const isCommentExisting = comments.some(
-          (comment) =>
-            comment.user.login === "github-actions[bot]" &&
-            comment.body === message,
-        );
-
-        if (!isCommentExisting) {
-          await octokit.rest.issues.createComment({
-            ...context.repo,
-            issue_number: pull_number,
-            body: message,
-          });
-        }
-      }
-    });
+    settings.map(
+      async ({ paths, message }) =>
+        await postComment(
+          paths,
+          message,
+          diffFilesPaths,
+          comments,
+          context,
+          octokit,
+        ),
+    );
   } catch (error) {
     core.setFailed(error.message);
   }
