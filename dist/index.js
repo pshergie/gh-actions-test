@@ -31111,11 +31111,13 @@ async function run() {
       pull_number,
     });
 
-    const changedFilesPaths = fileLists.map((diff) => diff.filename).join(", ");
+    const changedFilesPaths = fileLists.map((diff) => diff.filename);
 
     const checkDiff = (paths) => {
       if (typeof paths === "string") {
-        return changedFilesPaths.includes(paths);
+        return paths.some((path) =>
+          changedFilesPaths.some((diffPath) => diffPath.includes(path)),
+        );
       } else if (Array.isArray(paths)) {
         return paths.some((path) => changedFilesPaths.includes(path));
       } else {
