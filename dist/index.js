@@ -33224,19 +33224,40 @@ const core = __nccwpck_require__(9773);
 const github = __nccwpck_require__(8555);
 const { minimatch } = __nccwpck_require__(713);
 
+const checkDiff = (paths, diffFilesPaths) => {
+  if (typeof paths === "string") {
+    return diffFilesPaths.some(
+      (diffPath) => diffPath.includes(paths) || minimatch(diffPath, paths),
+    );
+  } else if (Array.isArray(paths)) {
+    return paths.some((path) =>
+      diffFilesPaths.some(
+        (diffPath) => diffPath.includes(path) || minimatch(diffPath, paths),
+      ),
+    );
+  } else {
+    throw new Error(
+      `Wrong type for 'paths' variable. It should be either string or an array of strings but is ${typeof paths}.`,
+    );
+  }
+};
+
 async function run() {
   try {
     const settings = [];
     core
       .getInput("settings")
       .split("\n")
-      .map((line, i) => {
-        i % 2 === 0
-          ? settings.push({
-              paths: line.split("paths: ")[1],
-            })
-          : (settings[settings.length - 1].message =
-              line.split("message: ")[1]);
+      .map((line) => {
+        if (line.startsWith("paths:")) {
+          settings.push({
+            paths: line.split("paths: ")[1],
+          });
+        } else if (line.startsWith("message:")) {
+          settings[settings.length - 1].message = line.split("message: ")[1];
+        } else {
+          settings[settings.length - 1].message += line;
+        }
       });
     console.log("SETTINGS", settings);
     const token = core.getInput("token");
@@ -33254,28 +33275,10 @@ async function run() {
       pull_number,
     });
 
-    const changedFilesPaths = fileLists.map((diff) => diff.filename);
-
-    const checkDiff = (paths) => {
-      if (typeof paths === "string") {
-        return changedFilesPaths.some(
-          (diffPath) => diffPath.includes(paths) || minimatch(diffPath, paths),
-        );
-      } else if (Array.isArray(paths)) {
-        return paths.some((path) =>
-          changedFilesPaths.some(
-            (diffPath) => diffPath.includes(path) || minimatch(diffPath, paths),
-          ),
-        );
-      } else {
-        throw new Error(
-          `Wrong type for 'paths' variable. It should be either string or an array of strings but is ${typeof paths}.`,
-        );
-      }
-    };
+    const diffFilesPaths = fileLists.map((diff) => diff.filename);
 
     settings.map(async ({ paths, message }) => {
-      let areTargetPathsChanged = checkDiff(paths);
+      let areTargetPathsChanged = checkDiff(paths, diffFilesPaths);
 
       if (areTargetPathsChanged) {
         const isCommentExisting = comments.some(
