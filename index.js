@@ -7,13 +7,13 @@ const parseMarkdown = (markdown) => {
 
   markdown.split("\n").map((line) => {
     if (line.startsWith("paths:")) {
-      settings.push({
+      result.push({
         paths: line.split("paths: ")[1],
       });
     } else if (line.startsWith("message:")) {
-      settings[settings.length - 1].message = line.split("message: ")[1];
+      result[result.length - 1].message = line.split("message: ")[1];
     } else {
-      settings[settings.length - 1].message += `\n${line}`;
+      result[result.length - 1].message += `\n${line}`;
     }
   });
 
