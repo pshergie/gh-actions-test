@@ -33263,6 +33263,7 @@ const checkDiff = (paths, diffFilesPaths) => {
 const postComment = async (
   paths,
   message,
+  pullNumber,
   diffFilesPaths,
   comments,
   context,
@@ -33280,7 +33281,7 @@ const postComment = async (
     if (!isCommentExisting) {
       await octokit.rest.issues.createComment({
         ...context.repo,
-        issue_number: pull_number,
+        issue_number: pullNumber,
         body: message,
       });
     }
@@ -33294,16 +33295,16 @@ async function run() {
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);
     const context = github.context;
-    const pull_number = context.payload.pull_request.number;
+    const pullNumber = context.payload.pull_request.number;
 
     const { data: comments } = await octokit.rest.issues.listComments({
       ...context.repo,
-      issue_number: pull_number,
+      issue_number: pullNumber,
     });
 
     const { data: fileLists } = await octokit.rest.pulls.listFiles({
       ...context.repo,
-      pull_number,
+      pullNumber,
     });
 
     const diffFilesPaths = fileLists.map((diff) => diff.filename);
@@ -33313,6 +33314,7 @@ async function run() {
         await postComment(
           paths,
           message,
+          pullNumber,
           diffFilesPaths,
           comments,
           context,
