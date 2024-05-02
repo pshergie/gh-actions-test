@@ -81,10 +81,14 @@ async function run() {
       issue_number: pullNumber,
     });
 
-    const { data: fileLists } = await octokit.rest.pulls.listFiles({
+    const data = await octokit.rest.pulls.listFiles({
       ...context.repo,
       pull_number: pullNumber,
     });
+
+    console.log("data", data);
+
+    const fileLists = data.data;
 
     const diffFilesPaths = fileLists.map((diff) => diff.filename);
 
