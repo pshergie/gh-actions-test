@@ -31115,11 +31115,11 @@ async function run() {
 
     const checkDiff = (paths) => {
       if (typeof paths === "string") {
+        return changedFilesPaths.some((diffPath) => diffPath.includes(paths));
+      } else if (Array.isArray(paths)) {
         return paths.some((path) =>
           changedFilesPaths.some((diffPath) => diffPath.includes(path)),
         );
-      } else if (Array.isArray(paths)) {
-        return paths.some((path) => changedFilesPaths.includes(path));
       } else {
         throw new Error(
           `Wrong type for 'paths' variable. It should be either string or an array of strings but is ${typeof paths}.`,
