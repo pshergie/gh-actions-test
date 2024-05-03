@@ -33302,12 +33302,12 @@ const fetchDiffFiles = async (context, pullNumber, octokit) => {
       // per_page: 100,
     });
 
+    console.log("data", data);
+
     page++;
     result.push(data.data);
     link = data?.headers?.link;
   } while (link);
-
-  console.log("data", data);
 
   return result.map((diff) => diff.filename);
 };
