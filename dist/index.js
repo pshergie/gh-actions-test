@@ -33302,7 +33302,8 @@ const fetchDiffFiles = async (context, pullNumber, octokit) => {
       // per_page: 100,
     });
 
-    data.push(response.data.map((diff) => diff.filename));
+    const parsedData = response.data.map((diff) => diff.filename);
+    data = [...data, ...parsedData];
     const linkHeader = response.headers.link;
     pagesRemaining = linkHeader && linkHeader.includes(`rel=\"next\"`);
     page++;
