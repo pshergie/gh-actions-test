@@ -33298,8 +33298,8 @@ const fetchDiffFiles = async (context, pullNumber, octokit) => {
     const response = await octokit.rest.pulls.listFiles({
       ...context.repo,
       pull_number: pullNumber,
+      per_page: 100,
       page,
-      // per_page: 100,
     });
 
     const parsedData = response.data.map((diff) => diff.filename);
@@ -33309,7 +33309,29 @@ const fetchDiffFiles = async (context, pullNumber, octokit) => {
     page++;
   }
 
-  console.log("diff files array", data);
+  return data;
+};
+
+const fetchComments = async (context, pullNumber, octokit) => {
+  let data = [];
+  let pagesRemaining = true;
+  let page = 1;
+
+  while (pagesRemaining) {
+    const response = await octokit.rest.issues.listComments({
+      ...context.repo,
+      issue_number: pullNumber,
+      per_page: 100,
+      page,
+    });
+
+    // const parsedData = response.data.map((diff) => diff.filename);
+    data = [...data, ...response.data];
+    const linkHeader = response.headers.link;
+    pagesRemaining = linkHeader && linkHeader.includes(`rel=\"next\"`);
+    page++;
+  }
+
   return data;
 };
 
@@ -33322,10 +33344,7 @@ async function run() {
     const context = github.context;
     const pullNumber = context.payload.pull_request.number;
 
-    const { data: comments } = await octokit.rest.issues.listComments({
-      ...context.repo,
-      issue_number: pullNumber,
-    });
+    const comments = await fetchComments(context, pullNumber, octokit);
 
     const diffFilesPaths = await fetchDiffFiles(context, pullNumber, octokit);
 
