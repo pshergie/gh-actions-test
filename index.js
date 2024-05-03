@@ -7,13 +7,13 @@ const parseMarkdown = (markdown) => {
 
   markdown.split("\n").map((line) => {
     if (line.startsWith("paths:")) {
-      result.push({
+      data.push({
         paths: line.split("paths: ")[1].split(","),
       });
     } else if (line.startsWith("message:")) {
-      result[result.length - 1].message = line.split("message: ")[1];
+      data[data.length - 1].message = line.split("message: ")[1];
     } else {
-      result[result.length - 1].message += `\n${line}`;
+      data[data.length - 1].message += `\n${line}`;
     }
   });
 
@@ -69,7 +69,6 @@ const postComment = async (
 
 const fetchDiffFiles = async (context, pullNumber, octokit) => {
   let data = [];
-  const nextPattern = /(?<=<)([\S]*)(?=>; rel="Next")/i;
   let pagesRemaining = true;
 
   while (pagesRemaining) {
@@ -82,10 +81,6 @@ const fetchDiffFiles = async (context, pullNumber, octokit) => {
     data.push(response.data.map((diff) => diff.filename));
     const linkHeader = response.headers.link;
     pagesRemaining = linkHeader && linkHeader.includes(`rel=\"next\"`);
-
-    if (pagesRemaining) {
-      url = linkHeader.match(nextPattern)[0];
-    }
   }
 
   return data;
