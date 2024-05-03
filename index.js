@@ -70,6 +70,7 @@ const postComment = async (
 const fetchDiffFiles = async (context, pullNumber, octokit) => {
   let data = [];
   let pagesRemaining = true;
+  let page = 1;
 
   while (pagesRemaining) {
     const response = await octokit.rest.pulls.listFiles({
@@ -83,6 +84,7 @@ const fetchDiffFiles = async (context, pullNumber, octokit) => {
     data.push(response.data.map((diff) => diff.filename));
     const linkHeader = response.headers.link;
     pagesRemaining = linkHeader && linkHeader.includes(`rel=\"next\"`);
+    page++;
   }
 
   return data;
