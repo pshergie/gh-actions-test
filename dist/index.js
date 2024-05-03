@@ -33294,20 +33294,20 @@ const fetchDiffFiles = async (context, pullNumber, octokit) => {
   let page = 1;
   let link;
 
-  do {
-    const data = await octokit.rest.pulls.listFiles({
-      ...context.repo,
-      pull_number: pullNumber,
-      page,
-      // per_page: 100,
-    });
+  // do {
+  //   const data = await octokit.rest.pulls.listFiles({
+  //     ...context.repo,
+  //     pull_number: pullNumber,
+  //     page,
+  //     // per_page: 100,
+  //   });
 
-    console.log("data", data);
+  //   console.log("data", data);
 
-    page++;
-    result.push(data.data);
-    link = data?.headers?.link;
-  } while (link);
+  //   page++;
+  //   result.push(data.data);
+  //   link = data?.headers?.link;
+  // } while (link);
 
   return result.map((diff) => diff.filename);
 };
