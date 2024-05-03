@@ -33326,7 +33326,7 @@ async function run() {
       issue_number: pullNumber,
     });
 
-    const diffFilesPaths = fetchDiffFiles(context, pullNumber, octokit);
+    const diffFilesPaths = await fetchDiffFiles(context, pullNumber, octokit);
 
     settings.map(
       async ({ paths, message }) =>
