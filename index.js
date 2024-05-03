@@ -76,6 +76,7 @@ const fetchDiffFiles = async (context, pullNumber, octokit) => {
     const response = await octokit.rest.pulls.listFiles({
       ...context.repo,
       pull_number: pullNumber,
+      page,
       // per_page: 100,
     });
 
