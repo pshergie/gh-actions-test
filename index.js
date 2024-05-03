@@ -21,11 +21,6 @@ const parseMarkdown = (markdown) => {
 };
 
 const checkDiff = (paths, diffFilesPaths) => {
-  console.log("");
-  console.log("paths", paths);
-  console.log("diffFilesPaths", diffFilesPaths);
-  console.log("");
-
   if (Array.isArray(paths)) {
     return paths.some((path) =>
       diffFilesPaths.some(
@@ -115,7 +110,6 @@ const fetchComments = async (context, pullNumber, octokit) => {
 async function run() {
   try {
     const settings = parseMarkdown(core.getInput("settings"));
-    console.log("SETTINGS", settings);
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);
     const context = github.context;
