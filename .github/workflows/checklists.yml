@@ -14,21 +14,16 @@ jobs:
         id: components-check
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          # insert your JSON under "settings" using the following scheme:
-          # [
-          #   {
-          #     "paths": string | string[],
-          #     "message": string
-          #   }
-          # ]
           settings: |-
-            [
-              {
-                "paths": "src/components",
-                "message": "Detected: changes in **components** folder have been made"
-              },
-              {
-                "paths": "src/utils",
-                "message": "Detected: changes in **utils** folder have been made"
-              }
-            ]
+            paths: src/components, src/utils
+            message: Detected: changes in both **components** and **utils** folders have been made
+            paths: src/components
+            message: Detected: changes in **components** folder have been made
+            paths: src/utils
+            message: Detected: changes in **utils** folder have been made
+            paths: *.js
+            message: ### Please tick the following checkboxes:
+
+            - [ ] the code is tested
+            - [ ] files are compressed
+            - [ ] files contain no errors
