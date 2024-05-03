@@ -33225,7 +33225,7 @@ const github = __nccwpck_require__(8555);
 const { minimatch } = __nccwpck_require__(713);
 
 const parseMarkdown = (markdown) => {
-  const result = [];
+  const data = [];
 
   markdown.split("\n").map((line) => {
     if (line.startsWith("paths:")) {
@@ -33239,7 +33239,7 @@ const parseMarkdown = (markdown) => {
     }
   });
 
-  return result;
+  return data;
 };
 
 const checkDiff = (paths, diffFilesPaths) => {
@@ -33290,26 +33290,27 @@ const postComment = async (
 };
 
 const fetchDiffFiles = async (context, pullNumber, octokit) => {
-  const result = [];
-  let page = 1;
-  let link;
+  let data = [];
+  const nextPattern = /(?<=<)([\S]*)(?=>; rel="Next")/i;
+  let pagesRemaining = true;
 
-  // do {
-  //   const data = await octokit.rest.pulls.listFiles({
-  //     ...context.repo,
-  //     pull_number: pullNumber,
-  //     page,
-  //     // per_page: 100,
-  //   });
+  while (pagesRemaining) {
+    const response = await octokit.rest.pulls.listFiles({
+      ...context.repo,
+      pull_number: pullNumber,
+      // per_page: 100,
+    });
 
-  //   console.log("data", data);
+    data.push(response.data.map((diff) => diff.filename));
+    const linkHeader = response.headers.link;
+    pagesRemaining = linkHeader && linkHeader.includes(`rel=\"next\"`);
 
-  //   page++;
-  //   result.push(data.data);
-  //   link = data?.headers?.link;
-  // } while (link);
+    if (pagesRemaining) {
+      url = linkHeader.match(nextPattern)[0];
+    }
+  }
 
-  return result.map((diff) => diff.filename);
+  return data;
 };
 
 async function run() {
