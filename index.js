@@ -103,7 +103,6 @@ const fetchComments = async (context, pullNumber, octokit) => {
       page,
     });
 
-    // const parsedData = response.data.map((diff) => diff.filename);
     data = [...data, ...response.data];
     const linkHeader = response.headers.link;
     pagesRemaining = linkHeader && linkHeader.includes(`rel=\"next\"`);
@@ -123,7 +122,6 @@ async function run() {
     const pullNumber = context.payload.pull_request.number;
 
     const comments = await fetchComments(context, pullNumber, octokit);
-
     const diffFilesPaths = await fetchDiffFiles(context, pullNumber, octokit);
 
     settings.map(
