@@ -33289,6 +33289,29 @@ const postComment = async (
   }
 };
 
+const fetchDiffFiles = async (context, pullNumber, octokit) => {
+  const result = [];
+  let page = 1;
+  let link;
+
+  do {
+    const data = await octokit.rest.pulls.listFiles({
+      ...context.repo,
+      pull_number: pullNumber,
+      page,
+      // per_page: 100,
+    });
+
+    page++;
+    result.push(data.data);
+    link = data?.headers?.link;
+  } while (link);
+
+  console.log("data", data);
+
+  return result.map((diff) => diff.filename);
+};
+
 async function run() {
   try {
     const settings = parseMarkdown(core.getInput("settings"));
@@ -33303,16 +33326,7 @@ async function run() {
       issue_number: pullNumber,
     });
 
-    const data = await octokit.rest.pulls.listFiles({
-      ...context.repo,
-      pull_number: pullNumber,
-    });
-
-    console.log("data", data);
-
-    const fileLists = data.data;
-
-    const diffFilesPaths = fileLists.map((diff) => diff.filename);
+    const diffFilesPaths = fetchDiffFiles(context, pullNumber, octokit);
 
     settings.map(
       async ({ paths, message }) =>
