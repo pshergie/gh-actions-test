@@ -37334,23 +37334,23 @@ const { minimatch } = __nccwpck_require__(713);
 const yaml = __nccwpck_require__(2755);
 const fs = __nccwpck_require__(7147);
 
-const parseMarkdown = (markdown) => {
-  const data = [];
+// const parseMarkdown = (markdown) => {
+//   const data = [];
 
-  markdown.split("\n").map((line) => {
-    if (line.startsWith("paths:")) {
-      data.push({
-        paths: line.split("paths: ")[1].split(","),
-      });
-    } else if (line.startsWith("message:")) {
-      data[data.length - 1].message = line.split("message: ")[1];
-    } else {
-      data[data.length - 1].message += `\n${line}`;
-    }
-  });
+//   markdown.split("\n").map((line) => {
+//     if (line.startsWith("paths:")) {
+//       data.push({
+//         paths: line.split("paths: ")[1].split(","),
+//       });
+//     } else if (line.startsWith("message:")) {
+//       data[data.length - 1].message = line.split("message: ")[1];
+//     } else {
+//       data[data.length - 1].message += `\n${line}`;
+//     }
+//   });
 
-  return data;
-};
+//   return data;
+// };
 
 const checkDiff = (paths, diffFilesPaths) => {
   if (Array.isArray(paths)) {
@@ -37441,8 +37441,8 @@ const fetchComments = async (context, pullNumber, octokit) => {
 
 async function run() {
   try {
-    const settings = parseMarkdown(
-      yaml.load(fs.readFileSync("docs/checklists-data.yml", "utf8")),
+    const settings = yaml.load(
+      fs.readFileSync("docs/checklists-data.yml", "utf8"),
     );
     console.log("SETTINGS", settings);
     const token = core.getInput("token");
