@@ -1,6 +1,8 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const { minimatch } = require("minimatch");
+const yaml = require("js-yaml");
+const fs = require("fs");
 
 const parseMarkdown = (markdown) => {
   const data = [];
@@ -109,6 +111,11 @@ const fetchComments = async (context, pullNumber, octokit) => {
 
 async function run() {
   try {
+    const config = yaml.safeLoad(
+      fs.readFileSync("docs/checklists-data.yml", "utf8"),
+    );
+    const indentedJson = JSON.stringify(config, null, 4);
+    console.log("indentedJson", indentedJson);
     const settings = parseMarkdown(core.getInput("settings"));
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);

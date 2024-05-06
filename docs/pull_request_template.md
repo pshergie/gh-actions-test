@@ -1,1 +1,0 @@
-- [ ] pls check requirements [requirements](README.md#dependencies).
