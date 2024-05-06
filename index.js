@@ -111,7 +111,7 @@ const fetchComments = async (context, pullNumber, octokit) => {
 
 async function run() {
   try {
-    const config = yaml.safeLoad(
+    const config = yaml.load(
       fs.readFileSync("docs/checklists-data.yml", "utf8"),
     );
     const indentedJson = JSON.stringify(config, null, 4);
