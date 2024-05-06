@@ -1,5 +1,5 @@
 - paths: src/components, src/utils
-  message: changes in both **components** or **utils** folders have been made
+  message: changes in **components** or **utils** folders have been made
 - paths: src/components
   message: changes in **components** folder have been made
 - paths: src/utils

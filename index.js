@@ -4,24 +4,6 @@ const { minimatch } = require("minimatch");
 const yaml = require("js-yaml");
 const fs = require("fs");
 
-// const parseMarkdown = (markdown) => {
-//   const data = [];
-
-//   markdown.split("\n").map((line) => {
-//     if (line.startsWith("paths:")) {
-//       data.push({
-//         paths: line.split("paths: ")[1].split(","),
-//       });
-//     } else if (line.startsWith("message:")) {
-//       data[data.length - 1].message = line.split("message: ")[1];
-//     } else {
-//       data[data.length - 1].message += `\n${line}`;
-//     }
-//   });
-
-//   return data;
-// };
-
 const checkDiff = (paths, diffFilesPaths) => {
   if (Array.isArray(paths)) {
     return paths.some((path) =>
