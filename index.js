@@ -114,6 +114,7 @@ async function run() {
     const settings = yaml.load(
       fs.readFileSync("docs/checklists-data.yml", "utf8"),
     );
+    console.log("SETTINGS", settings);
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);
     const context = github.context;
