@@ -111,12 +111,9 @@ const fetchComments = async (context, pullNumber, octokit) => {
 
 async function run() {
   try {
-    const config = yaml.load(
+    const settings = yaml.load(
       fs.readFileSync("docs/checklists-data.yml", "utf8"),
     );
-    const indentedJson = JSON.stringify(config, null, 4);
-    console.log("indentedJson", indentedJson);
-    const settings = parseMarkdown(core.getInput("settings"));
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);
     const context = github.context;
