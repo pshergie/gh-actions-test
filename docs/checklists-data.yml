@@ -1,12 +1,12 @@
 settings:
   - paths: src/components, src/utils
-  - message: changes in both **components** and **utils** folders have been made
+    message: changes in both **components** and **utils** folders have been made
   - paths: src/components
-  - message: changes in **components** folder have been made
+    message: changes in **components** folder have been made
   - paths: src/utils
-  - message: "Detected: changes in **utils** folder have been made"
+    message: "Detected: changes in **utils** folder have been made"
   - paths: "*.js"
-  - message: >
+    message: >
       ### Please tick the following checkboxes:
 
       - [ ] the code is tested
