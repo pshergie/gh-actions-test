@@ -5,7 +5,7 @@
 - paths: src/utils
   message: "Detected: changes in either **utils** folder have been made"
 - paths: "*.js"
-  message: >
+  message: |
     ### Please tick the following checkboxes:
 
     - [ ] the code is tested
