@@ -4,7 +4,7 @@
   message: changes in **components** folder have been made
 - paths: src/utils
   message: "Detected: changes in either **components** or **utils** folder have been made"
-- paths: "*.js"
+- paths: "**/*.js"
   message: |
     ### Please tick the following checkboxes:
 
