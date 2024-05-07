@@ -3,7 +3,7 @@
 - paths: src/components
   message: changes in **components** folder have been made
 - paths: src/utils
-  message: "Detected: changes in **utils** folder have been made"
+  message: "Detected: changes in either **utils** folder have been made"
 - paths: "*.js"
   message: >
     ### Please tick the following checkboxes:
