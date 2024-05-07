@@ -101,7 +101,10 @@ async function run() {
   try {
     const settings = yaml
       .load(fs.readFileSync("docs/checklists-data.yml", "utf8"))
-      .map((config) => ({ ...config, paths: config.paths.split(",").trim() }));
+      .map((config) => ({
+        ...config,
+        paths: config.paths.split(",").map((p) => p.trim()),
+      }));
     console.log("SETTINGS", settings);
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);
