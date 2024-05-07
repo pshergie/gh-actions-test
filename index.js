@@ -8,11 +8,11 @@ const checkDiff = (paths, diffFilesPaths) => {
   if (Array.isArray(paths)) {
     return paths.some((path) =>
       diffFilesPaths.some((diffPath) => {
-        console.log("diffPath", diffPath);
-        console.log("path", path);
+        console.log("diffPath:", diffPath);
+        console.log("path:    ", path);
         console.log("");
         console.log("diffPath.includes(path)", diffPath.includes(path));
-        console.log("minimatch(diffPath, path)");
+        console.log("minimatch(diffPath, path)", minimatch(diffPath, path));
         console.log("");
         return diffPath.includes(path) || minimatch(diffPath, path);
       }),
