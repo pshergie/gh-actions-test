@@ -7,15 +7,9 @@ const fs = require("fs");
 const checkDiff = (paths, diffFilesPaths) => {
   if (Array.isArray(paths)) {
     return paths.some((path) =>
-      diffFilesPaths.some((diffPath) => {
-        console.log("");
-        console.log("diffPath:                 ", diffPath);
-        console.log("path:                     ", path);
-        console.log("diffPath.includes(path):  ", diffPath.includes(path));
-        console.log("minimatch(diffPath, path):", minimatch(diffPath, path));
-        console.log("");
-        return diffPath.includes(path) || minimatch(diffPath, path);
-      }),
+      diffFilesPaths.some(
+        (diffPath) => diffPath.includes(path) || minimatch(diffPath, path),
+      ),
     );
   } else {
     throw new Error(
@@ -105,7 +99,6 @@ async function run() {
         ...config,
         paths: config.paths.split(",").map((p) => p.trim()),
       }));
-    console.log("SETTINGS", settings);
     const token = core.getInput("token");
     const octokit = github.getOctokit(token);
     const context = github.context;
