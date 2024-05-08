@@ -6,7 +6,7 @@ const fs = require("fs");
 
 import fetchComments from "./utils/fetchComments.js";
 import fetchDiffFiles from "./utils/fetchDiffFiles.js";
-import postComment from "./utils/spostComment.js";
+import postComment from "./utils/postComment.js";
 
 async function run() {
   try {
