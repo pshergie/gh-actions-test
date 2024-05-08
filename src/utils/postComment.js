@@ -1,4 +1,3 @@
-const { minimatch } = require("minimatch");
 import checkDiff from "./checkDiff.js";
 
 const postComment = async (

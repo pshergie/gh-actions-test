@@ -1,4 +1,6 @@
-const checkDiff = (paths, diffFilesPaths, minimatch) => {
+const { minimatch } = require("minimatch");
+
+const checkDiff = (paths, diffFilesPaths) => {
   if (Array.isArray(paths)) {
     return paths.some((path) =>
       diffFilesPaths.some(
