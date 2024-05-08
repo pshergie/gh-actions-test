@@ -37395,7 +37395,7 @@ const fetchDiffFiles = async (context, pullNumber, octokit) => {
 /* harmony default export */ const utils_fetchDiffFiles = (fetchDiffFiles);
 
 ;// CONCATENATED MODULE: ./src/utils/checkDiff.js
-const checkDiff = (paths, diffFilesPaths) => {
+const checkDiff = (paths, diffFilesPaths, minimatch) => {
   if (Array.isArray(paths)) {
     return paths.some((path) =>
       diffFilesPaths.some(
@@ -37412,6 +37412,7 @@ const checkDiff = (paths, diffFilesPaths) => {
 /* harmony default export */ const utils_checkDiff = (checkDiff);
 
 ;// CONCATENATED MODULE: ./src/utils/postComment.js
+const { minimatch } = __nccwpck_require__(713);
 
 
 const postComment = async (
@@ -37447,7 +37448,6 @@ const postComment = async (
 ;// CONCATENATED MODULE: ./src/index.js
 const core = __nccwpck_require__(9773);
 const github = __nccwpck_require__(8555);
-const { minimatch: src_minimatch } = __nccwpck_require__(713);
 const yaml = __nccwpck_require__(2755);
 const fs = __nccwpck_require__(7147);
 
