@@ -1,6 +1,6 @@
 import checkDiff from "./checkDiff.js";
 
-export default const postComment = async (
+const postComment = async (
   paths,
   message,
   pullNumber,
@@ -27,3 +27,5 @@ export default const postComment = async (
     }
   }
 };
+
+export default postComment;

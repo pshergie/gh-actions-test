@@ -1,4 +1,4 @@
-export default const fetchComments = async (context, pullNumber, octokit) => {
+const fetchComments = async (context, pullNumber, octokit) => {
   let data = [];
   let pagesRemaining = true;
   let page = 1;
@@ -19,3 +19,5 @@ export default const fetchComments = async (context, pullNumber, octokit) => {
 
   return data;
 };
+
+export default fetchComments;
