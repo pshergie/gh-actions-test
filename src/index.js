@@ -5,8 +5,8 @@ const yaml = require("js-yaml");
 const fs = require("fs");
 
 import fetchComments from "./utils/fetchComments.js";
-import fetchDiffFiles from "./fetchDiffFiles.js";
-import postComment from "./postComment.js";
+import fetchDiffFiles from ".utils/fetchDiffFiles.js";
+import postComment from "./utils/spostComment.js";
 
 async function run() {
   try {
