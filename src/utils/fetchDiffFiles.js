@@ -1,4 +1,4 @@
-const fetchDiffFiles = async (context, pullNumber, octokit) => {
+export const fetchDiffFiles = async (context, pullNumber, octokit) => {
   let data = [];
   let pagesRemaining = true;
   let page = 1;

@@ -1,4 +1,4 @@
-const checkDiff = (paths, diffFilesPaths) => {
+export const checkDiff = (paths, diffFilesPaths) => {
   if (Array.isArray(paths)) {
     return paths.some((path) =>
       diffFilesPaths.some(
