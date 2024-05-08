@@ -2,11 +2,7 @@
   "name": "gh-actions-test",
   "version": "1.0.0",
   "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
+  "author": "github.com/pshergie",
   "license": "ISC",
   "dependencies": {
     "@actions/core": "^1.10.1",
