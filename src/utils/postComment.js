@@ -1,4 +1,4 @@
-import checkDiff from "./checkDiff";
+import checkDiff from "./checkDiff.js";
 
 export const postComment = async (
   paths,

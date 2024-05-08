@@ -4,9 +4,9 @@ const { minimatch } = require("minimatch");
 const yaml = require("js-yaml");
 const fs = require("fs");
 
-import fetchComments from "./utils/checkComments";
-import fetchDiffFiles from "./fetchDiffFiles";
-import postComment from "./postComment";
+import fetchComments from "./utils/checkComments.js";
+import fetchDiffFiles from "./fetchDiffFiles.js";
+import postComment from "./postComment.js";
 
 async function run() {
   try {
