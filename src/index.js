@@ -9,8 +9,9 @@ import postComment from "./utils/postComment.js";
 
 async function run() {
   try {
+    const datapath = core.getInput("datapath");
     const settings = yaml
-      .load(fs.readFileSync("docs/checklists-data.yml", "utf8"))
+      .load(fs.readFileSync(datapath, "utf8"))
       .map((config) => ({
         ...config,
         paths: config.paths.split(",").map((p) => p.trim()),
