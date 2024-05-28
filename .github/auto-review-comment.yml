@@ -1,0 +1,7 @@
+- paths: "**/*.*"
+  message: |
+    ### Please tick the following checkboxes:
+
+    - [ ] the code is tested
+    - [ ] files are compressed
+    - [ ] files contain no errors
