@@ -27,7 +27,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List current directory
-        run: ls -la
+        run: ls -l
 
       - name: Analyze changes
         uses: pshergie/pull-request-auto-reviewer@v1
