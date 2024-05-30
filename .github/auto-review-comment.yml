@@ -1,3 +1,4 @@
+- prependMsg: ""
 - paths: "**/*.*"
   message: |
     ### Please tick the following checkboxes:
