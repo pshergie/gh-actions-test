@@ -1,4 +1,4 @@
-- prependMsg: "🗯️ [pull-request-auto-reviewer]:"
+- prependMsg: ""
 - checks:
     - paths: "**/*.*"
       message: |
