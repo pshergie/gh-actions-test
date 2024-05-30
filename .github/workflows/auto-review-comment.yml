@@ -26,9 +26,6 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: List current directory
-        run: ls -la
-
       - name: Analyze changes
         uses: pshergie/pull-request-auto-reviewer@v1
         with:
