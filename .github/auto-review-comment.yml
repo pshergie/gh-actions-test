@@ -7,3 +7,9 @@
         - [ ] the code is tested
         - [ ] files are compressed
         - [ ] files contain no errors
+    - paths: "**/*.js"
+      message: |
+        ### You have changed javascript file(s). Please tick the following checkboxes:
+
+        - [ ] according unit test(s) added
+        - [ ] no eslint warnings
