@@ -8,7 +8,7 @@ on:
 
 jobs:
   prepare:
-    name: Preparation
+    name: Prepare
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
