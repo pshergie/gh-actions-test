@@ -30,7 +30,7 @@ jobs:
         run: ls -l
 
       - name: Analyze changes
-        uses: pshergie/pull-request-auto-reviewer@v1
+        uses: pshergie/pull-request-auto-reviewer@beta
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           data-path: .github/auto-review-comment.yml
