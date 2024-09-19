@@ -33,4 +33,4 @@ jobs:
         uses: pshergie/prator@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          data-path: .github/auto-review-comment.yml
+          rules-path: .github/auto-review-comment.yml
