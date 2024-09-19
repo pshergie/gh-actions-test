@@ -1,19 +1,19 @@
 prependMsg: ""
 checks:
-  - allCasesPaths:
-      - paths: "**/*.*"
-        message: |
-          ### Please tick the following checkboxes:
+  allCasesPaths:
+    - paths: "**/*.*"
+      message: |
+        ### Please tick the following checkboxes:
 
-          - [ ] the code is tested
-          - [ ] files are compressed
-          - [ ] files contain no errors
-    modifiedOnlyPaths:
-      - paths: "src/utils/"
-        message: You have modified file(s) in src/utils/ directory
-    addedOnlyPaths:
-      - paths: "src/components/"
-        message: "you have added file(s) to src/components/ directory"
-    deletedOnlyPaths:
-      - paths: "src/libs/"
-        message: "you have deleted file(s) on src/libs/ directory"
+        - [ ] the code is tested
+        - [ ] files are compressed
+        - [ ] files contain no errors
+  modifiedOnlyPaths:
+    - paths: "src/utils/"
+      message: You have modified file(s) in src/utils/ directory
+  addedOnlyPaths:
+    - paths: "src/components/"
+      message: "you have added file(s) to src/components/ directory"
+  deletedOnlyPaths:
+    - paths: "src/libs/"
+      message: "you have deleted file(s) on src/libs/ directory"
